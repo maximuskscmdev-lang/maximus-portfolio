@@ -45,15 +45,7 @@ export function Stats() {
       <div className="container">
         <Reveal>
           <div
-            className="glass"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: 8,
-              padding: '32px 24px',
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border)',
-            }}
+            className="glass grid-stats"
           >
             {STATS.map((stat) => (
               <div

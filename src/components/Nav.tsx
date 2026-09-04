@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 
 const LINKS = [
   { href: '#work', label: 'Work' },
@@ -12,6 +12,7 @@ const LINKS = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     const stored = localStorage.getItem('theme');
     return stored === 'light' ? 'light' : 'dark';
@@ -31,7 +32,25 @@ export function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Lock body scroll when the mobile menu is open + close on resize to desktop
+  useEffect(() => {
+    if (!open) return;
+    const onResize = () => {
+      if (window.innerWidth > 900) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('resize', onResize);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open ]);
+
   return (
+    <>
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -42,9 +61,9 @@ export function Nav() {
         left: 0,
         right: 0,
         zIndex: 100,
-        background: scrolled ? 'var(--nav-bg)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+        background: scrolled || open ? 'var(--nav-bg)' : 'transparent',
+        backdropFilter: scrolled || open ? 'blur(16px)' : 'none',
+        borderBottom: scrolled || open ? '1px solid var(--border)' : '1px solid transparent',
         transition: 'background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
       }}
     >
@@ -55,11 +74,13 @@ export function Nav() {
           alignItems: 'center',
           justifyContent: 'space-between',
           height: 72,
+          gap: 12,
         }}
         aria-label="Main navigation"
       >
         <a
           href="#top"
+          onClick={() => setOpen(false)}
           style={{
             fontFamily: 'var(--font-display)',
             fontWeight: 700,
@@ -68,6 +89,7 @@ export function Nav() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: 10,
+            flexShrink: 0,
           }}
           aria-label="Maximus — back to top"
         >
@@ -80,6 +102,7 @@ export function Nav() {
               background: 'var(--accent)',
               boxShadow: '0 0 16px var(--glow)',
               display: 'inline-block',
+              flexShrink: 0,
             }}
           />
           MAXIMUS
@@ -94,14 +117,7 @@ export function Nav() {
             fontSize: 13,
           }}
         >
-          <ul
-            style={{
-              display: 'flex',
-              listStyle: 'none',
-              gap: 4,
-              marginRight: 8,
-            }}
-          >
+          <ul className="nav-links">
             {LINKS.map((link) => (
               <li key={link.href}>
                 <a
@@ -133,13 +149,44 @@ export function Nav() {
               justifyContent: 'center',
               color: 'var(--text)',
               transition: 'border-color 0.2s ease, background 0.2s ease',
+              flexShrink: 0,
             }}
             className="theme-toggle"
           >
             {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
           </button>
+
+          <button
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            className="nav-toggle"
+          >
+            {open ? <X size={19} /> : <Menu size={19} />}
+          </button>
         </div>
       </nav>
     </motion.header>
+
+    <AnimatePresence>
+      {open && (
+        <motion.nav
+          className="nav-mobile-panel"
+          aria-label="Mobile navigation"
+          initial={{ opacity: 0, y: -12, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -12, scale: 0.98 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {LINKS.map((link) => (
+            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              {link.label}
+              <span aria-hidden="true" style={{ color: 'var(--text-muted)' }}>→</span>
+            </a>
+          ))}
+        </motion.nav>
+      )}
+    </AnimatePresence>
+    </>
   );
 }

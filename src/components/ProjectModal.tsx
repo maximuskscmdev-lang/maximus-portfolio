@@ -55,18 +55,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
         onClick={onClose}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 200,
-          background: 'var(--modal-scrim)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 24,
-        }}
+        className="modal-overlay"
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
@@ -76,19 +65,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           exit={{ opacity: 0, y: reduce ? 0 : 24, scale: reduce ? 1 : 0.97 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           role="document"
-          style={{
-            background: 'var(--bg)',
-            border: '1px solid var(--border-strong)',
-            borderRadius: 24,
-            maxWidth: 680,
-            width: '100%',
-            maxHeight: '88vh',
-            overflowY: 'auto',
-            overscrollBehavior: 'contain',
-            WebkitOverflowScrolling: 'touch',
-            touchAction: 'pan-y',
-            boxShadow: 'var(--shadow)',
-          }}
+          className="modal-panel"
         >
           <div
             style={{
@@ -107,12 +84,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#febc2e' }} />
             <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#28c840' }} />
             <span
-              style={{
-                marginLeft: 'auto',
-                fontFamily: 'var(--font-mono)',
-                fontSize: 12,
-                color: 'var(--text-muted)',
-              }}
+              className="modal-spec-label"
             >
               spec — {project.id}
             </span>
@@ -139,7 +111,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </button>
           </div>
 
-          <div style={{ padding: '28px 28px 32px' }}>
+          <div className="modal-body">
             <span
               style={{
                 fontFamily: 'var(--font-mono)',
@@ -252,7 +224,7 @@ export function ProjectCard({ project, large, onOpen }: ProjectCardProps) {
   return (
     <button
       onClick={() => onOpen(project)}
-      className="project-card"
+      className={`project-card${large ? ' project-card-large' : ''}`}
       aria-label={`Open ${project.title} project details`}
       style={{
         textAlign: 'left',
@@ -260,7 +232,6 @@ export function ProjectCard({ project, large, onOpen }: ProjectCardProps) {
         background: 'var(--surface)',
         border: '1px solid var(--border)',
         borderRadius: 'var(--radius-lg)',
-        padding: large ? 32 : 24,
         display: 'flex',
         flexDirection: 'column',
         gap: 14,

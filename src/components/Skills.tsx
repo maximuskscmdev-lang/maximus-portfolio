@@ -58,11 +58,8 @@ export function Skills() {
         <Reveal>
           <p className="micro-label" style={{ marginBottom: 20 }}>02 — arsenal</p>
           <h2
+            className="section-title"
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
               marginBottom: 48,
             }}
           >
@@ -70,7 +67,7 @@ export function Skills() {
           </h2>
         </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
+        <div className="grid-skills">
           {SKILL_GROUPS.map((group, i) => {
             const c = COLOR_MAP[group.color];
             return (

@@ -50,7 +50,7 @@ export function Contact() {
     border: '1px solid var(--border-strong)',
     color: 'var(--text)',
     fontFamily: 'var(--font-body)',
-    fontSize: 15,
+    fontSize: 16,
     transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
   } as const;
 
@@ -60,11 +60,8 @@ export function Contact() {
         <Reveal>
           <p className="micro-label" style={{ marginBottom: 20 }}>05 — contact</p>
           <h2
+            className="section-title"
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
               lineHeight: 1.08,
               marginBottom: 16,
             }}
@@ -77,10 +74,10 @@ export function Contact() {
           </p>
         </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 0.9fr', gap: 48, alignItems: 'start' }}>
+        <div className="grid-contact">
           <Reveal>
-            <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 20, minWidth: 0 }}>
+              <div className="grid-form-2">
                 <div>
                   <label htmlFor="name" style={{ display: 'block', marginBottom: 8, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                     Your name
@@ -110,7 +107,7 @@ export function Contact() {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <div className="grid-form-2">
                 <div>
                   <label htmlFor="projectType" style={{ display: 'block', marginBottom: 8, fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                     Project type
@@ -203,7 +200,7 @@ export function Contact() {
               <motion.button
                 type="submit"
                 disabled={status === 'sending'}
-                className="btn btn-primary"
+                className="btn btn-primary contact-submit"
                 whileTap={{ scale: 0.97 }}
                 style={{ alignSelf: 'flex-start', opacity: status === 'sending' ? 0.7 : 1 }}
               >
@@ -234,7 +231,7 @@ export function Contact() {
                   <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 6 }}>
                     Email me directly
                   </span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--text)' }}>maximuskscm.dev@gmail.com</span>
+                  <span className="wrap-anywhere" style={{ fontFamily: 'var(--font-mono)', fontSize: 14, color: 'var(--text)' }}>maximuskscm.dev@gmail.com</span>
                 </span>
               </a>
 

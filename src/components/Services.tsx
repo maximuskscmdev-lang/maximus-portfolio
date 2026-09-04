@@ -57,11 +57,8 @@ export function Services() {
         <Reveal>
           <p className="micro-label" style={{ marginBottom: 20 }}>04 — for you</p>
           <h2
+            className="section-title"
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
               lineHeight: 1.1,
               marginBottom: 16,
             }}
@@ -74,7 +71,7 @@ export function Services() {
           </p>
         </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20, marginBottom: 40 }}>
+        <div className="grid-services">
           {SERVICES.map((service, i) => {
             const c = COLOR_MAP[service.color];
             const Icon = service.icon;
@@ -129,8 +126,7 @@ export function Services() {
         <Reveal delay={0.1}>
           <a
             href="#contact"
-            className="btn btn-primary"
-            style={{ fontSize: 16, padding: '16px 34px' }}
+            className="btn btn-primary services-cta"
           >
             Start your project <ArrowRight size={18} aria-hidden="true" />
           </a>

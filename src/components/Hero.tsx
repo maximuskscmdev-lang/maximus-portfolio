@@ -94,13 +94,13 @@ export function Hero() {
         overflow: 'hidden',
       }}
     >
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: 64, alignItems: 'center' }}>
-        <div>
+      <div className="container grid-hero">
+        <div style={{ minWidth: 0 }}>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--accent-text)', marginBottom: 24 }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--accent-text)', marginBottom: 24, flexWrap: 'wrap' }}
           >
             <Sparkles size={14} aria-hidden="true" />
             AVAILABLE FOR NEW PROJECTS
@@ -110,14 +110,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700,
-              fontSize: 'clamp(3.2rem, 8vw, 6.5rem)',
-              lineHeight: 0.98,
-              letterSpacing: '-0.03em',
-              marginBottom: 28,
-            }}
+            className="hero-title"
           >
             I build <br />
             <span style={{ color: 'var(--accent-text)' }}>software</span> that
@@ -146,7 +139,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}
+            className="hero-cta"
           >
             <a href="#work" className="btn btn-primary">
               View my work <ArrowRight size={17} aria-hidden="true" />
@@ -160,14 +153,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            style={{
-              display: 'flex',
-              gap: 40,
-              marginTop: 56,
-              fontFamily: 'var(--font-mono)',
-              fontSize: 12,
-              color: 'var(--text-muted)',
-            }}
+            className="hero-stats"
           >
             {[
               ['17+', 'PROJECTS'],
@@ -176,8 +162,8 @@ export function Hero() {
               ['1–2 WK', 'AVG DELIVERY'],
               ['0', 'FORMAL DEGREES'],
             ].map(([num, label]) => (
-              <div key={label}>
-                <div style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 700, color: 'var(--text)' }}>
+              <div key={label} style={{ minWidth: 0 }}>
+                <div className="hero-stats-num">
                   {num}
                 </div>
                 <div style={{ letterSpacing: '0.1em', marginTop: 4 }}>{label}</div>
@@ -190,7 +176,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          style={{ position: 'relative' }}
+          style={{ position: 'relative', minWidth: 0, maxWidth: '100%' }}
         >
           <div
             className="glass"
@@ -233,15 +219,7 @@ export function Hero() {
               </span>
             </div>
             <div
-              style={{
-                padding: '22px 22px 26px',
-                fontFamily: 'var(--font-mono)',
-                fontSize: 13.5,
-                lineHeight: 1.9,
-                minHeight: 260,
-                position: 'relative',
-                background: 'transparent',
-              }}
+              className="term-body"
             >
               {TERMINAL_LINES.map((line, i) => (
                 <TypingLine

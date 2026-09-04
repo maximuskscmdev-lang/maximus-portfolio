@@ -15,11 +15,8 @@ export function Projects() {
             <div>
               <p className="micro-label" style={{ marginBottom: 20 }}>03 — selected work</p>
               <h2
+                className="section-title"
                 style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
                   lineHeight: 1.1,
                 }}
               >
@@ -33,7 +30,7 @@ export function Projects() {
           </div>
         </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24, marginBottom: 24 }}>
+        <div className="grid-featured">
           {featuredProjects.map((project, i) => (
             <Reveal key={project.id} delay={i * 0.08}>
               <ProjectCard project={project} large onOpen={setActive} />
@@ -47,7 +44,7 @@ export function Projects() {
           </div>
         </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+        <div className="grid-others">
           {otherProjects.map((project, i) => (
             <Reveal key={project.id} delay={i * 0.04}>
               <ProjectCard project={project} onOpen={setActive} />

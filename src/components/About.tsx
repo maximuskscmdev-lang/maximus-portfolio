@@ -11,16 +11,13 @@ const STORY_POINTS = [
 export function About() {
   return (
     <section id="about" className="section">
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 64, alignItems: 'start' }}>
+      <div className="container grid-about">
         <Reveal>
           <p className="micro-label" style={{ marginBottom: 20 }}>01 — the story</p>
           <h2
+            className="section-title"
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-              fontWeight: 700,
               lineHeight: 1.08,
-              letterSpacing: '-0.02em',
             }}
           >
             Self-taught, <br />
