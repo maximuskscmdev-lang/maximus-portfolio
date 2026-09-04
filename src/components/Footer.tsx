@@ -1,7 +1,27 @@
-import { Mail, ArrowUp } from 'lucide-react';
-import { GithubIcon, XIcon } from './icons';
+import { useState } from 'react';
+import { Mail, ArrowUp, Check } from 'lucide-react';
+import { GithubIcon, DiscordIcon } from './icons';
+
+const DISCORD_USERNAME = 'devil_of_godly_heaven';
 
 export function Footer() {
+  const [discordCopied, setDiscordCopied] = useState(false);
+
+  const copyDiscord = async () => {
+    try {
+      await navigator.clipboard.writeText(DISCORD_USERNAME);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = DISCORD_USERNAME;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    setDiscordCopied(true);
+    window.setTimeout(() => setDiscordCopied(false), 2000);
+  };
+
   return (
     <footer style={{ borderTop: '1px solid var(--border)', padding: '48px 0 56px', background: 'var(--bg-alt)' }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
@@ -16,23 +36,34 @@ export function Footer() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          {[
-            { href: 'https://github.com/maximuskscmdev-lang', label: 'GitHub', icon: <GithubIcon size={17} aria-hidden="true" /> },
-            { href: 'https://x.com/maximuskscmdev', label: 'X / Twitter', icon: <XIcon size={15} aria-hidden="true" /> },
-            { href: 'mailto:maximuskscm.dev@gmail.com', label: 'Email', icon: <Mail size={17} aria-hidden="true" /> },
-          ].map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target={s.href.startsWith('http') ? '_blank' : undefined}
-              rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              aria-label={s.label}
-              style={{ width: 42, height: 42, borderRadius: 12, border: '1px solid var(--border-strong)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease' }}
-              className="social-btn"
-            >
-              {s.icon}
-            </a>
-          ))}
+          <a
+            href="https://github.com/maximuskscmdev-lang"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            style={{ width: 42, height: 42, borderRadius: 12, border: '1px solid var(--border-strong)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease' }}
+            className="social-btn"
+          >
+            <GithubIcon size={17} aria-hidden="true" />
+          </a>
+          <button
+            type="button"
+            onClick={copyDiscord}
+            aria-label={discordCopied ? 'Discord username copied!' : `Copy Discord username ${DISCORD_USERNAME}`}
+            title={`Discord: ${DISCORD_USERNAME} (click to copy)`}
+            style={{ width: 42, height: 42, borderRadius: 12, border: '1px solid var(--border-strong)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease' }}
+            className="social-btn"
+          >
+            {discordCopied ? <Check size={16} aria-hidden="true" /> : <DiscordIcon size={17} aria-hidden="true" />}
+          </button>
+          <a
+            href="mailto:maximuskscm.dev@gmail.com"
+            aria-label="Email"
+            style={{ width: 42, height: 42, borderRadius: 12, border: '1px solid var(--border-strong)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease' }}
+            className="social-btn"
+          >
+            <Mail size={17} aria-hidden="true" />
+          </a>
           <a
             href="#top"
             aria-label="Back to top"

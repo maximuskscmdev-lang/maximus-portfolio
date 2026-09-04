@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Send, Loader2, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { GithubIcon, XIcon } from './icons';
+import { Mail, Send, Loader2, CheckCircle2, AlertTriangle, Copy, Check } from 'lucide-react';
+import { GithubIcon, DiscordIcon } from './icons';
 import { Reveal } from './Reveal';
 import { isSupabaseConfigured, submitContact, type ContactPayload } from '../lib/supabase';
 
@@ -17,8 +17,11 @@ const BUDGETS = ['Under $100', '$100 – $500', '$500 – $2k', '$2k+', 'Not sur
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
+const DISCORD_USERNAME = 'devil_of_godly_heaven';
+
 export function Contact() {
   const [status, setStatus] = useState<Status>('idle');
+  const [discordCopied, setDiscordCopied] = useState(false);
   const [form, setForm] = useState<ContactPayload>({
     name: '',
     email: '',
@@ -29,6 +32,21 @@ export function Contact() {
 
   const update = (key: keyof ContactPayload, value: string) =>
     setForm((f) => ({ ...f, [key]: value }));
+
+  const copyDiscord = async () => {
+    try {
+      await navigator.clipboard.writeText(DISCORD_USERNAME);
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = DISCORD_USERNAME;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    setDiscordCopied(true);
+    window.setTimeout(() => setDiscordCopied(false), 2000);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -253,16 +271,16 @@ export function Contact() {
                   >
                     <GithubIcon size={19} aria-hidden="true" />
                   </a>
-                  <a
-                    href="https://x.com/maximuskscmdev"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="X (Twitter) profile"
+                  <button
+                    type="button"
+                    onClick={copyDiscord}
+                    aria-label={discordCopied ? 'Discord username copied!' : `Copy Discord username ${DISCORD_USERNAME}`}
+                    title={`Discord: ${DISCORD_USERNAME} (click to copy)`}
                     style={{ width: 46, height: 46, borderRadius: 12, border: '1px solid var(--border-strong)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.2s ease, background 0.2s ease, transform 0.2s ease' }}
                     className="social-btn"
                   >
-                    <XIcon size={17} aria-hidden="true" />
-                  </a>
+                    {discordCopied ? <Check size={17} aria-hidden="true" /> : <DiscordIcon size={19} aria-hidden="true" />}
+                  </button>
                   <a
                     href="mailto:maximuskscm.dev@gmail.com"
                     aria-label="Send an email"
@@ -272,6 +290,16 @@ export function Contact() {
                     <Mail size={19} aria-hidden="true" />
                   </a>
                 </div>
+                <button
+                  type="button"
+                  onClick={copyDiscord}
+                  className="wrap-anywhere"
+                  style={{ marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12.5, color: discordCopied ? 'var(--accent-text)' : 'var(--text-muted)', transition: 'color 0.2s ease' }}
+                  aria-live="polite"
+                >
+                  {discordCopied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+                  {discordCopied ? 'copied!' : `discord: ${DISCORD_USERNAME}`}
+                </button>
               </div>
 
               <div
